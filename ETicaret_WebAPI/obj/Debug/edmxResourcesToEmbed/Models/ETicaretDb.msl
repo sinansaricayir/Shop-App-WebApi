@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ETicaretDbModelStoreContainer" CdmEntityContainer="ETicaretDbEntities1">
+    <EntitySetMapping Name="Kategori">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Kategori">
+        <MappingFragment StoreEntitySet="Kategori">
+          <ScalarProperty Name="kategoriAd" ColumnName="kategoriAd" />
+          <ScalarProperty Name="kategoriId" ColumnName="kategoriId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kayit">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Kayit">
+        <MappingFragment StoreEntitySet="Kayit">
+          <ScalarProperty Name="kayitKatId" ColumnName="kayitKatId" />
+          <ScalarProperty Name="kayitUrunId" ColumnName="kayitUrunId" />
+          <ScalarProperty Name="kayitId" ColumnName="kayitId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Musteri">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Musteri">
+        <MappingFragment StoreEntitySet="Musteri">
+          <ScalarProperty Name="musteriSifre" ColumnName="musteriSifre" />
+          <ScalarProperty Name="musteriMail" ColumnName="musteriMail" />
+          <ScalarProperty Name="musteriTel" ColumnName="musteriTel" />
+          <ScalarProperty Name="musteriSoyad" ColumnName="musteriSoyad" />
+          <ScalarProperty Name="musteriAd" ColumnName="musteriAd" />
+          <ScalarProperty Name="musteriId" ColumnName="musteriId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sepet">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Sepet">
+        <MappingFragment StoreEntitySet="Sepet">
+          <ScalarProperty Name="toplamFiyat" ColumnName="toplamFiyat" />
+          <ScalarProperty Name="urunAdet" ColumnName="urunAdet" />
+          <ScalarProperty Name="sepetUrunId" ColumnName="sepetUrunId" />
+          <ScalarProperty Name="sepetSiparisId" ColumnName="sepetSiparisId" />
+          <ScalarProperty Name="sepetId" ColumnName="sepetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Siparis">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Siparis">
+        <MappingFragment StoreEntitySet="Siparis">
+          <ScalarProperty Name="siparisMusteriId" ColumnName="siparisMusteriId" />
+          <ScalarProperty Name="siparisIlce" ColumnName="siparisIlce" />
+          <ScalarProperty Name="siparisIl" ColumnName="siparisIl" />
+          <ScalarProperty Name="siparisAdres" ColumnName="siparisAdres" />
+          <ScalarProperty Name="siparisTarih" ColumnName="siparisTarih" />
+          <ScalarProperty Name="genelToplam" ColumnName="genelToplam" />
+          <ScalarProperty Name="siparisId" ColumnName="siparisId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Urun">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Urun">
+        <MappingFragment StoreEntitySet="Urun">
+          <ScalarProperty Name="urunKatId" ColumnName="urunKatId" />
+          <ScalarProperty Name="urunAciklama" ColumnName="urunAciklama" />
+          <ScalarProperty Name="urunGorsel" ColumnName="urunGorsel" />
+          <ScalarProperty Name="urunFiyat" ColumnName="urunFiyat" />
+          <ScalarProperty Name="urunAd" ColumnName="urunAd" />
+          <ScalarProperty Name="urunId" ColumnName="urunId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Yonetici">
+      <EntityTypeMapping TypeName="ETicaretDbModel.Yonetici">
+        <MappingFragment StoreEntitySet="Yonetici">
+          <ScalarProperty Name="yoneticiSifre" ColumnName="yoneticiSifre" />
+          <ScalarProperty Name="yoneticiAd" ColumnName="yoneticiAd" />
+          <ScalarProperty Name="yoneticiId" ColumnName="yoneticiId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

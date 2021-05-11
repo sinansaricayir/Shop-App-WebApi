@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ETicaretDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ETicaretDbEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategori" EntityType="ETicaretDbModel.Kategori" />
+    <EntitySet Name="Kayit" EntityType="ETicaretDbModel.Kayit" />
+    <EntitySet Name="Musteri" EntityType="ETicaretDbModel.Musteri" />
+    <EntitySet Name="Sepet" EntityType="ETicaretDbModel.Sepet" />
+    <EntitySet Name="Siparis" EntityType="ETicaretDbModel.Siparis" />
+    <EntitySet Name="Urun" EntityType="ETicaretDbModel.Urun" />
+    <EntitySet Name="Yonetici" EntityType="ETicaretDbModel.Yonetici" />
+    <AssociationSet Name="FK_Kayit_KatKay" Association="ETicaretDbModel.FK_Kayit_KatKay">
+      <End Role="Kategori" EntitySet="Kategori" />
+      <End Role="Kayit" EntitySet="Kayit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Urun_ToUrunKat" Association="ETicaretDbModel.FK_Urun_ToUrunKat">
+      <End Role="Kategori" EntitySet="Kategori" />
+      <End Role="Urun" EntitySet="Urun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kayit_ToTable" Association="ETicaretDbModel.FK_Kayit_ToTable">
+      <End Role="Urun" EntitySet="Urun" />
+      <End Role="Kayit" EntitySet="Kayit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Siparis_SipMus" Association="ETicaretDbModel.FK_Siparis_SipMus">
+      <End Role="Musteri" EntitySet="Musteri" />
+      <End Role="Siparis" EntitySet="Siparis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sepet_SepetSiparis" Association="ETicaretDbModel.FK_Sepet_SepetSiparis">
+      <End Role="Siparis" EntitySet="Siparis" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_UrunSepet" Association="ETicaretDbModel.FK_Table_UrunSepet">
+      <End Role="Urun" EntitySet="Urun" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="kategoriId" />
+    </Key>
+    <Property Name="kategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategoriAd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kayit" Relationship="ETicaretDbModel.FK_Kayit_KatKay" FromRole="Kategori" ToRole="Kayit" />
+    <NavigationProperty Name="Urun" Relationship="ETicaretDbModel.FK_Urun_ToUrunKat" FromRole="Kategori" ToRole="Urun" />
+  </EntityType>
+  <EntityType Name="Kayit">
+    <Key>
+      <PropertyRef Name="kayitId" />
+    </Key>
+    <Property Name="kayitId" Type="Int32" Nullable="false" />
+    <Property Name="kayitUrunId" Type="Int32" Nullable="false" />
+    <Property Name="kayitKatId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kategori" Relationship="ETicaretDbModel.FK_Kayit_KatKay" FromRole="Kayit" ToRole="Kategori" />
+    <NavigationProperty Name="Urun" Relationship="ETicaretDbModel.FK_Kayit_ToTable" FromRole="Kayit" ToRole="Urun" />
+  </EntityType>
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="musteriId" />
+    </Key>
+    <Property Name="musteriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="musteriAd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="musteriSoyad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="musteriTel" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="musteriMail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="musteriSifre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Siparis" Relationship="ETicaretDbModel.FK_Siparis_SipMus" FromRole="Musteri" ToRole="Siparis" />
+  </EntityType>
+  <EntityType Name="Sepet">
+    <Key>
+      <PropertyRef Name="sepetId" />
+    </Key>
+    <Property Name="sepetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sepetSiparisId" Type="Int32" Nullable="false" />
+    <Property Name="sepetUrunId" Type="Int32" Nullable="false" />
+    <Property Name="urunAdet" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="toplamFiyat" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="Siparis" Relationship="ETicaretDbModel.FK_Sepet_SepetSiparis" FromRole="Sepet" ToRole="Siparis" />
+    <NavigationProperty Name="Urun" Relationship="ETicaretDbModel.FK_Table_UrunSepet" FromRole="Sepet" ToRole="Urun" />
+  </EntityType>
+  <EntityType Name="Siparis">
+    <Key>
+      <PropertyRef Name="siparisId" />
+    </Key>
+    <Property Name="siparisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="genelToplam" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="siparisTarih" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="siparisAdres" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="siparisIl" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="siparisIlce" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="siparisMusteriId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Musteri" Relationship="ETicaretDbModel.FK_Siparis_SipMus" FromRole="Siparis" ToRole="Musteri" />
+    <NavigationProperty Name="Sepet" Relationship="ETicaretDbModel.FK_Sepet_SepetSiparis" FromRole="Siparis" ToRole="Sepet" />
+  </EntityType>
+  <EntityType Name="Urun">
+    <Key>
+      <PropertyRef Name="urunId" />
+    </Key>
+    <Property Name="urunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunAd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urunFiyat" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="urunGorsel" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="urunAciklama" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="urunKatId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kategori" Relationship="ETicaretDbModel.FK_Urun_ToUrunKat" FromRole="Urun" ToRole="Kategori" />
+    <NavigationProperty Name="Kayit" Relationship="ETicaretDbModel.FK_Kayit_ToTable" FromRole="Urun" ToRole="Kayit" />
+    <NavigationProperty Name="Sepet" Relationship="ETicaretDbModel.FK_Table_UrunSepet" FromRole="Urun" ToRole="Sepet" />
+  </EntityType>
+  <EntityType Name="Yonetici">
+    <Key>
+      <PropertyRef Name="yoneticiId" />
+    </Key>
+    <Property Name="yoneticiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="yoneticiAd" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="yoneticiSifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Kayit_KatKay">
+    <End Type="ETicaretDbModel.Kategori" Role="Kategori" Multiplicity="1" />
+    <End Type="ETicaretDbModel.Kayit" Role="Kayit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="kategoriId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitKatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Urun_ToUrunKat">
+    <End Type="ETicaretDbModel.Kategori" Role="Kategori" Multiplicity="1" />
+    <End Type="ETicaretDbModel.Urun" Role="Urun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="kategoriId" />
+      </Principal>
+      <Dependent Role="Urun">
+        <PropertyRef Name="urunKatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kayit_ToTable">
+    <End Type="ETicaretDbModel.Urun" Role="Urun" Multiplicity="1" />
+    <End Type="ETicaretDbModel.Kayit" Role="Kayit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun">
+        <PropertyRef Name="urunId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitUrunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Siparis_SipMus">
+    <End Type="ETicaretDbModel.Musteri" Role="Musteri" Multiplicity="1" />
+    <End Type="ETicaretDbModel.Siparis" Role="Siparis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteri">
+        <PropertyRef Name="musteriId" />
+      </Principal>
+      <Dependent Role="Siparis">
+        <PropertyRef Name="siparisMusteriId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sepet_SepetSiparis">
+    <End Type="ETicaretDbModel.Siparis" Role="Siparis" Multiplicity="1" />
+    <End Type="ETicaretDbModel.Sepet" Role="Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Siparis">
+        <PropertyRef Name="siparisId" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="sepetSiparisId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_UrunSepet">
+    <End Type="ETicaretDbModel.Urun" Role="Urun" Multiplicity="1" />
+    <End Type="ETicaretDbModel.Sepet" Role="Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun">
+        <PropertyRef Name="urunId" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="sepetUrunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

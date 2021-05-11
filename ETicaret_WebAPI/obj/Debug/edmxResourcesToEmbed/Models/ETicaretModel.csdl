@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ETicaretDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="kategoriId" />
+    </Key>
+    <Property Name="kategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategoriAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Urun" Relationship="Self.FK_Urun_UrunKat" FromRole="Kategori" ToRole="Urun" />
+  </EntityType>
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="musteriId" />
+    </Key>
+    <Property Name="musteriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="musteriAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="musteriSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="musteriTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="musteriMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="musteriSifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Siparis" Relationship="Self.FK_Siparis_SipMus" FromRole="Musteri" ToRole="Siparis" />
+  </EntityType>
+  <EntityType Name="Sepet">
+    <Key>
+      <PropertyRef Name="sepetId" />
+    </Key>
+    <Property Name="sepetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sepetSiparisId" Type="Int32" Nullable="false" />
+    <Property Name="sepetUrunId" Type="Int32" Nullable="false" />
+    <Property Name="urunAdet" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="toplamFiyat" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Siparis" Relationship="Self.FK_Sepet_SepetSiparis" FromRole="Sepet" ToRole="Siparis" />
+    <NavigationProperty Name="Urun" Relationship="Self.FK_Table_UrunSepet" FromRole="Sepet" ToRole="Urun" />
+  </EntityType>
+  <EntityType Name="Siparis">
+    <Key>
+      <PropertyRef Name="siparisId" />
+    </Key>
+    <Property Name="siparisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="araToplam" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="kdvOranı" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="genelToplam" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="siparisTarih" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="siparisAdres" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="siparisIl" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="siparisIlce" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="siparisMusteriId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Musteri" Relationship="Self.FK_Siparis_SipMus" FromRole="Siparis" ToRole="Musteri" />
+    <NavigationProperty Name="Sepet" Relationship="Self.FK_Sepet_SepetSiparis" FromRole="Siparis" ToRole="Sepet" />
+  </EntityType>
+  <EntityType Name="Urun">
+    <Key>
+      <PropertyRef Name="urunId" />
+    </Key>
+    <Property Name="urunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urunFiyat" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="urunGorsel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urunAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urunKatId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kategori" Relationship="Self.FK_Urun_UrunKat" FromRole="Urun" ToRole="Kategori" />
+    <NavigationProperty Name="Sepet" Relationship="Self.FK_Table_UrunSepet" FromRole="Urun" ToRole="Sepet" />
+  </EntityType>
+  <EntityType Name="Yonetici">
+    <Key>
+      <PropertyRef Name="yoneticiId" />
+    </Key>
+    <Property Name="yoneticiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="yoneticiAd" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="yoneticiSifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Urun_UrunKat">
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+    <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="kategoriId" />
+      </Principal>
+      <Dependent Role="Urun">
+        <PropertyRef Name="urunKatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Siparis_SipMus">
+    <End Role="Musteri" Type="Self.Musteri" Multiplicity="1" />
+    <End Role="Siparis" Type="Self.Siparis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteri">
+        <PropertyRef Name="musteriId" />
+      </Principal>
+      <Dependent Role="Siparis">
+        <PropertyRef Name="siparisMusteriId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sepet_SepetSiparis">
+    <End Role="Siparis" Type="Self.Siparis" Multiplicity="1" />
+    <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Siparis">
+        <PropertyRef Name="siparisId" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="sepetSiparisId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_UrunSepet">
+    <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+    <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun">
+        <PropertyRef Name="urunId" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="sepetUrunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ETicaretDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" />
+    <EntitySet Name="Musteri" EntityType="Self.Musteri" />
+    <EntitySet Name="Sepet" EntityType="Self.Sepet" />
+    <EntitySet Name="Siparis" EntityType="Self.Siparis" />
+    <EntitySet Name="Urun" EntityType="Self.Urun" />
+    <EntitySet Name="Yonetici" EntityType="Self.Yonetici" />
+    <AssociationSet Name="FK_Urun_UrunKat" Association="Self.FK_Urun_UrunKat">
+      <End Role="Kategori" EntitySet="Kategori" />
+      <End Role="Urun" EntitySet="Urun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Siparis_SipMus" Association="Self.FK_Siparis_SipMus">
+      <End Role="Musteri" EntitySet="Musteri" />
+      <End Role="Siparis" EntitySet="Siparis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sepet_SepetSiparis" Association="Self.FK_Sepet_SepetSiparis">
+      <End Role="Siparis" EntitySet="Siparis" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_UrunSepet" Association="Self.FK_Table_UrunSepet">
+      <End Role="Urun" EntitySet="Urun" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
